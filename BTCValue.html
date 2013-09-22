@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=Unicode" />
+        <title>BTCValue</title>
+        <script type="text/javascript" src="scripts/jquery.min.js"></script>
+        <style type="text/css">
+            body{
+                height:135px;
+                width:220px;
+                background: #000;
+                color:#fff;
+            }
+            .ticker{
+                float:left;
+                width: 100px;
+                margin:0;
+                padding:0;
+            }
+        </style>
+
+        <script type="text/javascript">
+            var
+                urls = [
+                    'http://data.mtgox.com/api/2/BTCUSD/money/ticker_fast',
+                    'https://btc-e.com/api/2/btc_usd/ticker'
+                ];
+
+            function getData(){
+                for(var i = 0; i < urls.length; i++){
+                    $.ajax(urls[i], {
+                        dataType: 'json',
+                        async: false
+                    }).done(function(resp){
+                        if(i == 0){
+                            $('#mtgox_value').text(resp.data.last.display);
+                        } else if(i == 1) {
+                            $('#btce_value').text('$'+resp.ticker.last);
+                        }
+                    });
+                }
+                var update = new Date();
+                $('#last_update').html('Last Updated:<br />'+update.toDateString()+' '+update.toTimeString());
+                setTimeout(getData, 5*60*1000);
+            }
+
+            //can be removed, just a little ticker to requestb.in to track install numbers
+            function track()
+            {
+                $.ajax('http://x9ivjrctnqyy.runscope.net', {
+                    dataType: 'json',
+                    async: false
+                });
+            }
+
+            $(document).ready(function(){
+                $.support.cors =true;
+
+                //delay anything requiring web requests, can slow down gadget init.
+                setTimeout(track, 1000);
+                setTimeout(getData, 2000);
+            });
+        </script>
+    </head>
+    
+    <body>
+        <div id="content">
+            <div id="mtgox" class="ticker">
+                <h3>MtGox</h3>
+                <g:text id="mtgox_value">$0</g:text>
+            </div>
+            <div id="btce" class="ticker">
+                <h3>BTC-e</h3>
+                <g:text id="btce_value">$0</g:text>
+            </div>
+            <div id="time">
+                <g:text id="last_update">Loading...</g:text>
+            </div>
+        </div>
+    </body>
+</html>

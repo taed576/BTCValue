@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gadget>
+  <name>BTCValue</name>
+  <namespace>taed.pro</namespace>
+  <version>0.1</version>
+  <author name="Taed"></author>
+  <copyright>&#169; Taed Productions</copyright>
+  <description>Bitcoin value gadget</description>
+  <icons>
+    <icon height="400" width="400" src="logo.png" />
+  </icons>
+  <hosts>
+    <host name="sidebar">
+      <base type="HTML" apiVersion="1.0.0" src="BTCValue.html" />
+      <permissions>Full</permissions>
+      <platform minPlatformVersion="1.0" />
+    </host>
+  </hosts>
+</gadget>
